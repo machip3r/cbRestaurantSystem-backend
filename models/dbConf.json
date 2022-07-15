@@ -1,0 +1,9 @@
+{
+  "mysql": {
+    "host": "freedb.tech",
+    "port": "3306",
+    "user": "freedbtech_Administrador",
+    "password": "abasolo12",
+    "database": "freedbtech_foodandcode"
+  }
+}
