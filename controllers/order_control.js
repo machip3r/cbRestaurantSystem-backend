@@ -32,8 +32,8 @@ orderControl.allActiveTables = (request, result) =>
 orderControl.addOrder = (request, result) => {
   const body = request.body;
 
-  if (body.mro_id && body.mes_id)
-    orderModel.addOrder([body.mro_id, body.mes_id], (error, rows) =>
+  if (body.id_employee && body.id_board)
+    orderModel.addOrder([body.id_employee, body.id_board], (error, rows) =>
       error
         ? result.status(500).send({ message: error })
         : rows.affectedRows > 0
@@ -49,8 +49,8 @@ orderControl.addOrder = (request, result) => {
 orderControl.deleteOrder = (request, result) => {
   const body = request.body;
 
-  if (body.ord_id)
-    orderModel.deleteOrder([body.ord_id], (error, rows) =>
+  if (body.id_order)
+    orderModel.deleteOrder([body.id_order], (error, rows) =>
       error
         ? result.status(500).send({ message: error })
         : rows.affectedRows > 0

@@ -1,9 +1,9 @@
 var express = require("express");
 var router = express.Router();
-var mesero_control = require("../controllers/meseros_control");
+var mesero_control = require("../controllers/employee_control");
 var path = require("path");
 var multer = require("multer");
-const mesero = require("../models/meseros");
+const mesero = require("../models/employee_model");
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -16,7 +16,7 @@ var storage = multer.diskStorage({
     );
   },
 });
-var uploadS = multer({storage: storage}).single("file");
+var uploadS = multer({ storage: storage }).single("file");
 
 router.post("/nuevo", uploadS, mesero_control.nuevo);
 router.get("/seleccionarTodos", mesero_control.seleccionarTodos);

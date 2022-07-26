@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const food_control = require("../controllers/food_control.js");
+const food_control = require("../controllers/product_control.js");
 
 router.get("/all_foods", food_control.all_foods);
 router.post("/new_food", food_control.new_food);

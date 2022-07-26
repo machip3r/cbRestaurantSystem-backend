@@ -1,18 +1,25 @@
-const conn=require('./connection');
+const connection = require("./connection");
 
-let category_model = () => {};
+let categoryModel = () => {};
 
-
-category_model.new_category = (datos,cb) => {
-     conn.query('INSERT INTO categoria(cat_nombre, cat_tipo, cat_plus18) VALUES (?,?,?);', datos,cb);
+categoryModel.addCategory = (data, callback) => {
+  connection.query(
+    "INSERT INTO category(c_name, c_type) VALUES (?, ?)",
+    data,
+    callback
+  );
 };
 
-category_model.all_categories = (datos,cb) => {
-     conn.query("SELECT * FROM categoria;",[],cb);
+categoryModel.allCategories = (data, callback) => {
+  connection.query("SELECT * FROM category;", [], callback);
 };
 
-category_model.delete_category = (datos, cb) => {
-    conn.query("DELETE FROM categoria WHERE cat_id = ?;", datos, cb);
+categoryModel.deleteCategory = (data, callback) => {
+  connection.query(
+    "DELETE FROM category WHERE id_category = ?",
+    data,
+    callback
+  );
 };
 
-module.exports = category_model;
+module.exports = categoryModel;

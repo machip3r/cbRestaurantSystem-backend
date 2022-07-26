@@ -8,32 +8,24 @@ tableControl.allActiveTables = (request, result) =>
       : result.status(200).send(rows)
   );
 
-tableControl.filledSpacesTables = (request, result) =>
+/* tableControl.filledSpacesTables = (request, result) =>
   tableModel.filledSpacesTables([], (error, rows) =>
     error
       ? result.status(500).send({ message: error })
       : result.status(200).send(rows)
+  ); */
+
+tableControl.allSuborders = (request, result) =>
+  tableModel.allSuborders(
+    [request.params.id_board, request.params.id_order],
+    (error, rows) =>
+      error
+        ? result.status(500).send({ message: error })
+        : result.status(200).send(rows)
   );
 
-tableControl.allSuborders = (request, result) => {
-  const mes_id = request.params.mes_id,
-    ord_id = request.params.ord_id;
-  tableModel.allSuborders([mes_id, ord_id], (error, rows) =>
-    error
-      ? result.status(500).send({ message: error })
-      : result.status(200).send(rows)
-  );
-};
-
-tableControl.readFood = (request, result) =>
-  tableModel.readFood([], (error, rows) =>
-    error
-      ? result.status(500).send({ message: error })
-      : result.status(200).send(rows)
-  );
-
-tableControl.ordenTable = (request, result) =>
-  tableModel.ordenTable([], (error, rows) =>
+tableControl.orderTable = (request, result) =>
+  tableModel.orderTable([], (error, rows) =>
     error
       ? result.status(500).send({ message: error })
       : result.status(200).send(rows)
@@ -41,36 +33,32 @@ tableControl.ordenTable = (request, result) =>
 
 tableControl.addSuborder = (request, result) => {
   const body = request.body;
-  if (body.sub_ord_id && body.sub_com_id && body.sub_asiento && body.sub_cant) {
+
+  if (body.id_order && body.id_product && body.s_tag && body.s_cuantity)
     tableModel.addSuborder(
-      [body.sub_ord_id, body.sub_com_id, body.sub_asiento, body.sub_cant],
-      (error, rows) => {
-        if (error) {
-          result.status(500).send({ message: error });
-          console.log(error);
-        } else {
-          if (rows.affectedRows > 0)
-            result.status(202).send({ message: "Suborden registrada" });
-          else
-            result.status(500).send({ message: "No se registró la suborden" });
-        }
-      }
+      [body.id_order, body.id_product, body.s_tag, body.s_cuantity],
+      (error, rows) =>
+        error
+          ? result.status(500).send({ message: error })
+          : rows.affectedRows > 0
+          ? result.status(202).send({ message: "Suborden registrada" })
+          : result.status(500).send({ message: "No se registró la suborden" })
     );
-  } else result.status(401).send({ message: "Peticion incorrecta" }); // VALIDACION DE DATOS
+  else result.status(401).send({ message: "Peticion incorrecta" });
 };
 
 tableControl.deleteSuborder = (request, result) => {
   const body = request.body;
-  if (body.sub_id) {
-    tableModel.deleteSuborder([body.sub_id], (error, rows) => {
-      if (error) result.status(500).send({ message: error });
-      else {
-        if (rows.affectedRows > 0)
-          result.status(202).send({ message: "Comida eliminada" });
-        else result.status(500).send({ message: "No se elimino la comida" });
-      }
-    });
-  } else result.status(401).send({ message: "Peticion incorrecta" }); // VALIDACION DE DATOS
+
+  if (body.id_suborder)
+    tableModel.deleteSuborder([body.id_suborder], (error, rows) =>
+      error
+        ? result.status(500).send({ message: error })
+        : rows.affectedRows > 0
+        ? result.status(202).send({ message: "Suborden eliminada" })
+        : result.status(500).send({ message: "No se eliminó la suborden" })
+    );
+  else result.status(401).send({ message: "Peticion incorrecta" });
 };
 
 module.exports = tableControl;

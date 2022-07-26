@@ -1,69 +1,54 @@
 const connection = require("./connection.js");
-const table = () => {};
+const tableModel = () => {};
 
-table.allActiveTables = (data, callback) =>
+tableModel.allActiveTables = (data, callback) =>
   connection.query(
-    "SELECT m.mes_id " +
-      "FROM mesa AS m " +
-      "INNER JOIN orden AS o " +
-      "ON (o.ord_estado ='a' OR o.ord_estado ='w' ) " +
-      "AND o.ord_mes_id = m.mes_id",
+    "SELECT t.b_tag FROM board t INNER JOIN torder o ON (o.o_status ='a' OR o.o_status = 'w') AND t.id_board = o.id_board",
     data,
     callback
   );
 
-table.filledSpacesTables = (data, callback) =>
+/* tableModel.filledSpacesTables = (data, callback) =>
   connection.query(
-    "SELECT m.mes_id, COUNT(DISTINCT s.sub_asiento) AS cupo " +
+    "SELECT t.id_board, COUNT(DISTINCT s.sub_asiento) AS cupo " +
       "FROM mesa AS m " +
       "LEFT JOIN (SELECT s.sub_ord_id, o.ord_mes_id, s.sub_id " +
       "FROM suborden AS s, orden  AS o " +
       "WHERE s.sub_ord_id = o.ord_id " +
       "AND o.ord_estado = 'a') AS r " +
-      "ON m.mes_id = r.ord_mes_id " +
+      "ON t.id_board = r.ord_mes_id " +
       "LEFT JOIN suborden AS s " +
-      "ON s.sub_ord_id = r.sub_ord_id " +
-      "AND s.sub_id = r.sub_id " +
-      "GROUP BY m.mes_id " +
-      "ORDER BY m.mes_id ASC",
+      "ON s.sub_ord_id = r.sub_ord_id AND s.sub_id = r.sub_id GROUP BY t.id_board ORDER BY t.id_board ASC",
     data,
     callback
-  );
+  ); */
 
-table.allSuborders = (data, callback) =>
+tableModel.allSuborders = (data, callback) =>
   connection.query(
-    "SELECT so.sub_id, so.sub_asiento, f.com_nombre, so.sub_cant, (f.com_precio * so.sub_cant) AS sub_precio FROM suborden so INNER JOIN comida f ON(so.sub_com_id = f.com_id) INNER JOIN orden o ON(o.ord_id = so.sub_ord_id) INNER JOIN mesa t ON(t.mes_id = o.ord_mes_id) WHERE t.mes_id = ? AND o.ord_id = ? ORDER BY so.sub_asiento",
+    "SELECT so.id_suborder, so.s_tag, p.p_name, so.s_cuantity, (p.p_price * so.s_cuantity) AS s_price FROM suborder so INNER JOIN product p ON(so.id_product = p.id_product) INNER JOIN order o ON(o.id_order = so.id_order) INNER JOIN board t ON(t.id_board = o.id_board) WHERE t.id_board = ? AND o.id_order = ? ORDER BY so.s_tag",
     data,
     callback
   );
 
-table.readFood = (data, callback) =>
+tableModel.orderTable = (data, callback) =>
   connection.query(
-    "SELECT c.com_nombre " + "FROM comida AS c ",
+    "SELECT t.id_board, o.id_order FROM board t LEFT JOIN order o ON (o.o_status ='a' OR o.o_status ='w') AND t.id_board = o.id_board ORDER BY t.id_board ASC",
     data,
     callback
   );
 
-table.ordenTable = (data, callback) =>
+tableModel.addSuborder = (data, callback) =>
   connection.query(
-    "SELECT m.mes_id, o.ord_id " +
-      "FROM mesa AS m " +
-      "LEFT JOIN orden AS o " +
-      "ON (o.ord_estado ='a' OR o.ord_estado ='w' ) " +
-      "AND o.ord_mes_id = m.mes_id " +
-      "ORDER BY m.mes_id ASC",
+    "INSERT INTO suborder(id_suborder, id_product, s_tag, s_cuantity) VALUES (?, ?, ?, ?)",
     data,
     callback
   );
 
-table.addSuborder = (data, callback) =>
+tableModel.deleteSuborder = (data, callback) =>
   connection.query(
-    "INSERT INTO suborden(sub_ord_id, sub_com_id, sub_asiento, sub_cant) VALUES (?, ?, ?, ?)",
+    "DELETE FROM suborder WHERE id_suborder = ?",
     data,
     callback
   );
 
-table.deleteSuborder = (data, callback) =>
-  connection.query("DELETE FROM suborden WHERE sub_id = ?", data, callback);
-
-module.exports = table;
+module.exports = tableModel;
