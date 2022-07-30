@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const food_control = require("../controllers/product_control.js");
+const productControl = require("../controllers/product_control.js");
 
-router.get("/all_foods", food_control.all_foods);
-router.post("/new_food", food_control.new_food);
-router.post("/delete_food", food_control.delete_food);
-router.post("/update_food", food_control.update_food);
-router.post("/active_food", food_control.active_food);
-router.post("/inactive_food", food_control.inactive_food);
+router.get("/allProducts", productControl.allProducts);
+router.post("/addProduct", productControl.addProduct);
+router.post("/deleteProduct", productControl.deleteProduct);
+router.post("/updateProduct", productControl.updateProduct);
+router.post("/setActiveProduct", productControl.setActiveProduct);
+router.post("/setInactiveProduct", productControl.setInactiveProduct);
 
 module.exports = router;

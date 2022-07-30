@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-let conn = require("../models/connection");
+const connection = require("../models/connection.js");
 
 router.get("/shutdown", (req, res) => {
-  conn.end();
-  res.status(200).send("Se cerro la conexion");
+  connection.end();
+  res.status(200).send("Se cerró la conexión");
 });
 
 module.exports = router;

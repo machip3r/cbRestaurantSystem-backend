@@ -2,29 +2,26 @@ const express = require("express");
 const router = express.Router();
 const statisticControl = require("../controllers/statistic_control.js");
 
-router.get("/todayProfit/:fecha", statisticControl.todayProfit);
+router.get("/todayProfit/:date", statisticControl.todayProfit);
 router.get("/monthProfits", statisticControl.monthProfits);
+router.get("/allOrdersPerDate/:o_datetime", statisticControl.allOrdersPerDate);
 router.get(
-  "/allOrdersPerDate/:ord_fecha_hora",
-  statisticControl.allOrdersPerDate
-);
-router.get(
-  "/allOrdersPerTable/:mes_id/:fecha",
+  "/allOrdersPerTable/:id_board/:date",
   statisticControl.allOrdersPerTable
 );
 router.get(
-  "/allOrdersPerEmployee/:mro_id/:fecha",
+  "/allOrdersPerEmployee/:id_employee/:date",
   statisticControl.allOrdersPerEmployee
 );
 router.get(
-  "/countOrdersPerTable/:mes_id/:fecha",
+  "/countOrdersPerTable/:id_board/:date",
   statisticControl.countOrdersPerTable
 );
 router.get(
-  "/countOrdersPerEmployee/:mro_id/:fecha",
+  "/countOrdersPerEmployee/:id_employee/:date",
   statisticControl.countOrdersPerEmployee
 );
-router.get("/countSalesPerDate/:fecha", statisticControl.countSalesPerDate);
+router.get("/countSalesPerDate/:date", statisticControl.countSalesPerDate);
 router.get("/allTables/", statisticControl.allTables);
 router.get("/allEmployees/", statisticControl.allEmployees);
 

@@ -1,11 +1,10 @@
 var express = require("express");
 var router = express.Router();
-var mesero_control = require("../controllers/employee_control");
-var path = require("path");
-var multer = require("multer");
-const mesero = require("../models/employee_model");
+var employeeControl = require("../controllers/employee_control");
+/* var path = require("path");
+var multer = require("multer"); */
 
-var storage = multer.diskStorage({
+/* var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads");
   },
@@ -16,14 +15,14 @@ var storage = multer.diskStorage({
     );
   },
 });
-var uploadS = multer({ storage: storage }).single("file");
+var uploadS = multer({ storage: storage }).single("file"); */
 
-router.post("/nuevo", uploadS, mesero_control.nuevo);
-router.get("/seleccionarTodos", mesero_control.seleccionarTodos);
-router.put("/cambiarEstado", mesero_control.cambiarEstado);
-router.put("/actualizar", uploadS, mesero_control.actualizar);
-router.put("/actualizars", mesero_control.actualizars);
-router.get("/activos", mesero_control.activos);
-router.get("/inactivos", mesero_control.inactivos);
+router.post("/addEmployee", employeeControl.addEmployee);
+router.get("/allEmployees", employeeControl.allEmployees);
+/* put ?? */
+router.post("/setStatusEmployee", employeeControl.setStatusEmployee);
+router.post("/updateEmployee", employeeControl.updateEmployee);
+router.get("/activeEmployees", employeeControl.activeEmployees);
+router.get("/inactiveEmployees", employeeControl.inactiveEmployees);
 
 module.exports = router;
