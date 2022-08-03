@@ -12,7 +12,7 @@ productModel.addProduct = (data, callback) => {
 
 productModel.allProducts = (data, callback) => {
   connection.query(
-    "SELECT p.*, c.c_name FROM product p INNER JOIN categoria c ON p.id_category = c.id_category ORDER BY p.p_name",
+    "SELECT p.*, c.c_name FROM product p INNER JOIN category c ON p.id_category = c.id_category ORDER BY p.p_name",
     [],
     callback
   );

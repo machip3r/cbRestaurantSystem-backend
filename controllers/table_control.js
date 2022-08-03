@@ -1,6 +1,13 @@
 const tableModel = require("../models/table_model.js");
 const tableControl = () => {};
 
+tableControl.allTables = (request, result) =>
+  tableModel.allTables([], (error, rows) =>
+    error
+      ? result.status(500).send({ message: error })
+      : result.status(200).send(rows)
+  );
+
 tableControl.allActiveTables = (request, result) =>
   tableModel.allActiveTables([], (error, rows) =>
     error
@@ -26,6 +33,20 @@ tableControl.allSuborders = (request, result) =>
 
 tableControl.orderTable = (request, result) =>
   tableModel.orderTable([], (error, rows) =>
+    error
+      ? result.status(500).send({ message: error })
+      : result.status(200).send(rows)
+  );
+
+tableControl.getTableOrder = (request, result) =>
+  tableModel.getTableOrder([request.params.id_board], (error, rows) =>
+    error
+      ? result.status(500).send({ message: error })
+      : result.status(200).send(rows)
+  );
+
+tableControl.getTableTag = (request, result) =>
+  tableModel.getTableTag([request.params.id_board], (error, rows) =>
     error
       ? result.status(500).send({ message: error })
       : result.status(200).send(rows)

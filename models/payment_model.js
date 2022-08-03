@@ -25,6 +25,14 @@ paymentModel.orderSubtotal = (data, callback) => {
   );
 };
 
+paymentModel.orderTotal = (data, callback) => {
+  connection.query(
+    "SELECT SUM(so.total) AS order_total FROM (SELECT (SUM(s.s_cuantity) * p.p_price) AS total FROM suborder s INNER JOIN product p ON p.id_product = s.id_product WHERE s.id_order = ? GROUP BY s.id_product) so",
+    data,
+    callback
+  );
+};
+
 /* paymentModel.orderTotal = (data, callback) => {
   connection.query(
     "SELECT (SUM(subq.total_neto) + 0.1*SUM(subq.total_neto)) AS total_orden\
@@ -40,7 +48,7 @@ paymentModel.orderSubtotal = (data, callback) => {
  */
 paymentModel.addPayment = (data, callback) => {
   connection.query(
-    "INSERT INTO payment(id_order, p_subtotal, p_total, p_tip, p_type) VALUES (?, (SELECT SUM(so.total) AS order_total FROM (SELECT (SUM(s.s_cuantity) * p.p_price) AS total FROM suborder s INNER JOIN product p ON p.id_product = s.id_product WHERE s.id_order = ? GROUP BY s.id_product) so), (SELECT SUM(so.total) AS order_total FROM (SELECT (SUM(s.s_cuantity) * p.p_price) AS total FROM suborder s INNER JOIN product p ON p.id_product = s.id_product WHERE s.id_order = ? GROUP BY s.id_product) so), ?, ?)",
+    "INSERT INTO payment(id_order, p_subtotal, p_total, p_tip, p_type) VALUES (?, ?, ?, ?, ?)",
     data,
     callback
   );

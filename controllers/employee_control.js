@@ -35,7 +35,7 @@ employeeControl.setStatusEmployee = (request, result) => {
 
   if (body.e_status && body.id_employee)
     employeeModel.setStatusEmployee(
-      [body.mro_estado, body.mro_id],
+      [body.e_status, body.id_employee],
       (error, rows) =>
         error
           ? result.status(500).send({ message: error })
@@ -49,6 +49,7 @@ employeeControl.setStatusEmployee = (request, result) => {
     );
   else result.status(400).send({ message: "Peticion incorrecta" });
 };
+
 employeeControl.updateEmployee = (request, result) => {
   const body = request.body;
 

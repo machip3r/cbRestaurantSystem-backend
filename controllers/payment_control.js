@@ -32,19 +32,21 @@ paymentControl.orderTotal = (request, result) =>
 paymentControl.addPayment = (request, result) => {
   const body = request.body;
 
-  paymentModel.addPayment(
-    [
-      body.pag_ord_id,
-      body.pag_ord_id,
-      body.pag_ord_id,
-      body.pag_propina,
-      body.pag_tipo_pago,
-    ],
-    (error, rows) =>
-      error
-        ? result.status(500).send({ message: error })
-        : result.status(200).send(rows)
-  );
+  if (
+    body.id_order &&
+    body.p_subtotal &&
+    body.p_total &&
+    body.p_tip &&
+    body.p_type
+  )
+    paymentModel.addPayment(
+      [body.id_order, body.p_subtotal, body.p_total, body.p_tip, body.p_type],
+      (error, rows) =>
+        error
+          ? result.status(500).send({ message: error })
+          : result.status(200).send(rows)
+    );
+  else result.status(401).send({ message: "Peticion incorrecta" });
 };
 
 module.exports = paymentControl;
