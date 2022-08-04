@@ -21,6 +21,7 @@ router.post("/addEmployee", employeeControl.addEmployee);
 router.get("/allEmployees", employeeControl.allEmployees);
 router.put("/setStatusEmployee", employeeControl.setStatusEmployee);
 router.put("/updateEmployee", employeeControl.updateEmployee);
+router.post("/deleteEmployee", employeeControl.deleteEmployee);
 router.get("/activeEmployees", employeeControl.activeEmployees);
 router.get("/inactiveEmployees", employeeControl.inactiveEmployees);
 

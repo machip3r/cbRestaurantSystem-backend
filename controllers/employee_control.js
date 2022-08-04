@@ -4,12 +4,14 @@ let employeeControl = () => {};
 employeeControl.addEmployee = (request, result) => {
   const body = request.body;
 
+  console.log(body);
+
   if (
     body.e_name &&
     body.e_phone &&
     body.e_email &&
     body.e_password &&
-    body.e_admin
+    body.e_admin != null
   )
     employeeModel.addEmployee(
       [body.e_name, body.e_phone, body.e_email, body.e_password, body.e_admin],
@@ -80,6 +82,20 @@ employeeControl.updateEmployee = (request, result) => {
           : result.status(500).send({ message: "No se actualizó el empleado" })
     );
   else result.status(401).send({ message: "Peticion incorrecta" });
+};
+
+employeeControl.deleteEmployee = (request, result) => {
+  const body = request.body;
+
+  if (body.id_employee)
+    employeeModel.deleteEmployee([body.id_employee], (error, rows) =>
+      error
+        ? result.status(500).send({ message: error })
+        : rows.affectedRows > 0
+        ? result.status(200).send({ message: "Empleado eliminado" })
+        : result.status(500).send({ message: "Error al eliminar el empleado" })
+    );
+  else result.status(400).send({ message: "Peticion incorrecta" });
 };
 
 employeeControl.activeEmployees = (request, result) =>
