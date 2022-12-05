@@ -1,6 +1,19 @@
 const connection = require("./connection.js");
 const tableModel = () => {};
 
+tableModel.addTable = (data, callback) =>
+  connection.query("INSERT INTO board(b_tag) VALUES (?)", data, callback);
+
+tableModel.updateTable = (data, callback) =>
+  connection.query(
+    "UPDATE board SET b_tag = ? b_disponibility = ? WHERE id_board = ?",
+    data,
+    callback
+  );
+
+tableModel.deleteTable = (data, callback) =>
+  connection.query("DELETE FROM board WHERE id_board = ?", data, callback);
+
 tableModel.allTables = (data, callback) =>
   connection.query(
     "SELECT id_board, b_tag, b_disponibility FROM board",

@@ -1,6 +1,50 @@
 const tableModel = require("../models/table_model.js");
 const tableControl = () => {};
 
+tableControl.addTable = (request, result) => {
+  const body = request.body;
+
+  if (body.b_tag)
+    tableModel.addTable([body.b_tag], (error, rows) =>
+      error
+        ? result.status(500).send({ message: error })
+        : rows.affectedRows > 0
+        ? result.status(202).send({ message: "Mesa registrada" })
+        : result.status(500).send({ message: "No se registró la mesa" })
+    );
+  else result.status(401).send({ message: "Peticion incorrecta" });
+};
+
+tableControl.updateTable = (request, result) => {
+  const body = request.body;
+
+  if (body.id_board && body.b_tag && body.b_disponibility)
+    tableModel.updateTable(
+      [body.b_tag, body.b_disponibility, body.id_board],
+      (error, rows) =>
+        error
+          ? result.status(500).send({ message: error })
+          : rows.affectedRows > 0
+          ? result.status(202).send({ message: "Mesa actualizada" })
+          : result.status(500).send({ message: "No se actualizó la mesa" })
+    );
+  else result.status(401).send({ message: "Peticion incorrecta" });
+};
+
+tableControl.deleteTable = (request, result) => {
+  const body = request.body;
+
+  if (body.id_board)
+    tableModel.deleteTable([body.id_board], (error, rows) =>
+      error
+        ? result.status(500).send({ message: error })
+        : rows.affectedRows > 0
+        ? result.status(202).send({ message: "Mesa eliminada" })
+        : result.status(500).send({ message: "No se eliminó la mesa" })
+    );
+  else result.status(401).send({ message: "Peticion incorrecta" });
+};
+
 tableControl.allTables = (request, result) =>
   tableModel.allTables([], (error, rows) =>
     error
