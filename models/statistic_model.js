@@ -59,7 +59,7 @@ statisticModel.countSalesPerDate = (data, callback) =>
 
 statisticModel.allTables = (data, callback) =>
   connection.query(
-    "SELECT id_board FROM board ORDER BY id_board",
+    "SELECT id_board, b_tag FROM board ORDER BY id_board",
     data,
     callback
   );
