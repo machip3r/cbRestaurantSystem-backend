@@ -6,7 +6,7 @@ tableModel.addTable = (data, callback) =>
 
 tableModel.updateTable = (data, callback) =>
   connection.query(
-    "UPDATE board SET b_tag = ? b_disponibility = ? WHERE id_board = ?",
+    "UPDATE board SET b_tag = ? WHERE id_board = ?",
     data,
     callback
   );

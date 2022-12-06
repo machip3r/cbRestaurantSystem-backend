@@ -18,15 +18,13 @@ tableControl.addTable = (request, result) => {
 tableControl.updateTable = (request, result) => {
   const body = request.body;
 
-  if (body.id_board && body.b_tag && body.b_disponibility)
-    tableModel.updateTable(
-      [body.b_tag, body.b_disponibility, body.id_board],
-      (error, rows) =>
-        error
-          ? result.status(500).send({ message: error })
-          : rows.affectedRows > 0
-          ? result.status(202).send({ message: "Mesa actualizada" })
-          : result.status(500).send({ message: "No se actualizó la mesa" })
+  if (body.id_board && body.b_tag)
+    tableModel.updateTable([body.b_tag, body.id_board], (error, rows) =>
+      error
+        ? result.status(500).send({ message: error })
+        : rows.affectedRows > 0
+        ? result.status(202).send({ message: "Mesa actualizada" })
+        : result.status(500).send({ message: "No se actualizó la mesa" })
     );
   else result.status(401).send({ message: "Peticion incorrecta" });
 };
