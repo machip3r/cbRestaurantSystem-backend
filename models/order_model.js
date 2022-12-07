@@ -24,7 +24,7 @@ orderModel.allActiveEmployees = (data, callback) =>
 
 orderModel.allActiveTables = (data, callback) =>
   connection.query(
-    "SELECT id_board, b_tag FROM board WHERE b_disponibility = 'a' ORDER BY b_tag",
+    "SELECT id_board, b_tag FROM board WHERE b_disponibility = 'a' ORDER BY b_tag + 0",
     data,
     callback
   );
