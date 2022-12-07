@@ -60,7 +60,7 @@ employeeControl.updateEmployee = (request, result) => {
     body.e_phone &&
     body.e_email &&
     body.e_password &&
-    body.e_admin &&
+    body.e_admin != null &&
     body.e_status &&
     body.id_employee
   )
