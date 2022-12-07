@@ -19,8 +19,8 @@ var uploadS = multer({ storage: storage }).single("file"); */
 
 router.post("/addEmployee", employeeControl.addEmployee);
 router.get("/allEmployees", employeeControl.allEmployees);
-router.put("/setStatusEmployee", employeeControl.setStatusEmployee);
-router.put("/updateEmployee", employeeControl.updateEmployee);
+router.post("/setStatusEmployee", employeeControl.setStatusEmployee);
+router.post("/updateEmployee", employeeControl.updateEmployee);
 router.post("/deleteEmployee", employeeControl.deleteEmployee);
 router.get("/activeEmployees", employeeControl.activeEmployees);
 router.get("/inactiveEmployees", employeeControl.inactiveEmployees);
