@@ -24,7 +24,7 @@ statisticModel.allOrdersPerDate = (data, callback) =>
 
 statisticModel.allOrdersPerTable = (data, callback) =>
   connection.query(
-    "SELECT o.id_order, t.id_board, e.e_name, DATE_FORMAT(o.o_datetime, '%H:%i') AS o_datetime, o.o_status FROM torder o INNER JOIN employee e ON(e.id_employee = o.id_employee) INNER JOIN board t ON(t.id_board = o.id_board) WHERE o.id_board = ? AND DATE_FORMAT(o.o_datetime, '%Y-%m-%d') = ? ORDER BY o_datetime DESC",
+    "SELECT o.id_order, t.id_board, t.b_tag, e.e_name, DATE_FORMAT(o.o_datetime, '%H:%i') AS o_datetime, o.o_status FROM torder o INNER JOIN employee e ON(e.id_employee = o.id_employee) INNER JOIN board t ON(t.id_board = o.id_board) WHERE o.id_board = ? AND DATE_FORMAT(o.o_datetime, '%Y-%m-%d') = ? ORDER BY o_datetime DESC",
     data,
     callback
   );
